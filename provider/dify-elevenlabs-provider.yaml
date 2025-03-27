@@ -14,7 +14,7 @@ help:
     en_US: Get your API Key from ElevenLabs
     zh_Hans: 从 ElevenLabs 获取 API Key
   url:
-    en_US: https://elevenlabs.io/account/api-keys
+    en_US: https://elevenlabs.io/app/settings/api-keys
 supported_model_types:
   - tts
   - speech2text

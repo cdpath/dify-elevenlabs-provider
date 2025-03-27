@@ -124,8 +124,8 @@ This guide will help you set up and use the ElevenLabs provider plugin for Dify,
 
 ### Prerequisites
 
-1. An [ElevenLabs account](https://elevenlabs.io/signup)
-2. An ElevenLabs API key (available from your [ElevenLabs account page](https://elevenlabs.io/account/api-keys))
+1. An [ElevenLabs account](https://elevenlabs.io/app/sign-up)
+2. An ElevenLabs API key (available from your [ElevenLabs account page](https://elevenlabs.io/app/settings/api-keys))
 3. A Dify instance with plugin capabilities
 
 ### Installation

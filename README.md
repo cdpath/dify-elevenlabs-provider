@@ -16,7 +16,7 @@ A Dify plugin for integrating ElevenLabs Text-to-Speech and Speech-to-Text servi
 ## Requirements
 
 - An [ElevenLabs account](https://elevenlabs.io/)
-- ElevenLabs API key, available from your [ElevenLabs account page](https://elevenlabs.io/account/api-keys)
+- ElevenLabs API key, available from your [ElevenLabs account page](https://elevenlabs.io/app/settings/api-keys)
 
 ## Models
 
