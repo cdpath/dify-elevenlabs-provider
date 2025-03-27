@@ -1,0 +1,40 @@
+model: eleven_monolingual_v1
+model_type: tts
+model_properties:
+  default_voice: 'Rachel'
+  voices:
+    - mode: 'Rachel'
+      name: 'Rachel'
+      language: ['en-US']
+    - mode: 'Domi'
+      name: 'Domi'
+      language: ['en-US']
+    - mode: 'Bella'
+      name: 'Bella'
+      language: ['en-US']
+    - mode: 'Antoni'
+      name: 'Antoni'
+      language: ['en-US']
+    - mode: 'Thomas'
+      name: 'Thomas'
+      language: ['en-US']
+    - mode: 'Josh'
+      name: 'Josh'
+      language: ['en-US']
+    - mode: 'Arnold'
+      name: 'Arnold'
+      language: ['en-US']
+    - mode: 'Adam'
+      name: 'Adam'
+      language: ['en-US']
+    - mode: 'Sam'
+      name: 'Sam'
+      language: ['en-US']
+  word_limit: 5000
+  audio_type: 'mp3'
+  max_workers: 5
+pricing:
+  input: '0.015'
+  output: '0'
+  unit: '0.001'
+  currency: USD

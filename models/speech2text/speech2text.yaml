@@ -1,0 +1,12 @@
+model: speech-to-text
+model_type: speech2text
+model_properties:
+  context_size: 25600
+  file_upload_limit: 25
+  supported_file_extensions: ["mp3", "mp4", "mpeg", "mpga", "m4a", "wav", "webm"]
+  mode: 'transcription'
+pricing:
+  input: '0.25'
+  output: '0'
+  unit: '1'
+  currency: USD 

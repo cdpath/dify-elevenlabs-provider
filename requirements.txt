@@ -1,0 +1,2 @@
+dify_plugin~=0.0.1b75
+elevenlabs~=1.54.0

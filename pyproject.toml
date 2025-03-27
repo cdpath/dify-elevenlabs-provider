@@ -1,0 +1,10 @@
+[project]
+name = "dify-elevenlabs-provider"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "dify-plugin~=0.0.1b75",
+    "elevenlabs~=1.54.0",
+]
