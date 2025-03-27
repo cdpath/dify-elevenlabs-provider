@@ -1,4 +1,4 @@
-model: eleven_monolingual_v1
+model: eleven_multilingual_v2
 model_type: tts
 model_properties:
   default_voice: 'Rachel'
