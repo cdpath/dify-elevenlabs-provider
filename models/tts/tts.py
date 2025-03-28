@@ -1,6 +1,5 @@
 from collections.abc import Generator
 from typing import Optional, Dict, Type
-import io
 import logging
 import json
 
