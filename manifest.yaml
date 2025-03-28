@@ -3,10 +3,10 @@ type: plugin
 author: cdpath
 name: dify-elevenlabs-provider
 label:
-  en_US: dify-elevenlabs-provider
-  ja_JP: dify-elevenlabs-provider
-  zh_Hans: dify-elevenlabs-provider
-  pt_BR: dify-elevenlabs-provider
+  en_US: ElevenLabs
+  ja_JP: ElevenLabs
+  zh_Hans: ElevenLabs
+  pt_BR: ElevenLabs
 description:
   en_US: ElevenLabs TTS/STT provider
   ja_JP: ElevenLabs TTS/STT provider
