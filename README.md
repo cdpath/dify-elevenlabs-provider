@@ -22,13 +22,13 @@ A Dify plugin for integrating ElevenLabs Text-to-Speech and Speech-to-Text servi
 
 ### Text-to-Speech
 
-- **Model**: `eleven_monolingual_v1`
+- **Model**: `eleven_multilingual_v2`
 - **Voices**: Rachel, Domi, Bella, Antoni, Thomas, Josh, Arnold, Adam, Sam
 - **Default Voice**: Rachel
 
 ### Speech-to-Text
 
-- **Model**: `speech-to-text`
+- **Model**: `scribe_v1`
 - **Mode**: transcription
 - **Supported File Extensions**: mp3, mp4, mpeg, mpga, m4a, wav, webm
 - **File Upload Limit**: 25MB

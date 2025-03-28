@@ -53,11 +53,10 @@ class DifyElevenlabsProviderText2SpeechModel(TTSModel):
         :param tenant_id: user tenant id
         :param credentials: model credentials
         :param content_text: text content to be translated
-        :param voice: model timbre
+        :param voice: voice_id of elevenlabs
         :param user: unique user id
         :return: text translated to audio file or stream of audio chunks
         """
-        # Get API key from credentials
         if not isinstance(credentials, dict):
             raise CredentialsValidateFailedError("Credentials must be a dictionary")
             
@@ -65,39 +64,13 @@ class DifyElevenlabsProviderText2SpeechModel(TTSModel):
         if not api_key:
             raise CredentialsValidateFailedError("API key is required")
         
-        # Initialize ElevenLabs client
         client = ElevenLabs(api_key=api_key)
         
         try:
-            # Get available voices
-            available_voices = client.voices.get_all().voices
-            
-            # Find the requested voice or use the first available voice
-            voice_id = None
-            for v in available_voices:
-                if v.name.lower() == voice.lower():
-                    voice_id = v.voice_id
-                    break
-            
-            if not voice_id and available_voices:
-                # Use the first available voice if requested voice not found
-                voice_id = available_voices[0].voice_id
-            
-            if not voice_id:
-                raise CredentialsValidateFailedError("No voices available")
-            
-            # Use model parameter or default to eleven_turbo_v2
-            model_id = model or "eleven_turbo_v2"
-            
-            # Convert input text to ensure proper encoding for non-ASCII characters
-            if content_text and not isinstance(content_text, str):
-                content_text = str(content_text)
-                
-            # Generate audio stream
             response = client.text_to_speech.convert(
-                voice_id=voice_id,
+                voice_id=voice,
                 text=content_text,
-                model_id=model_id,
+                model_id=model,
                 output_format="mp3_44100_128",
                 voice_settings=VoiceSettings(
                     stability=0.5,
@@ -107,9 +80,7 @@ class DifyElevenlabsProviderText2SpeechModel(TTSModel):
                 )
             )
             
-            # Determine if we need to return a stream or full bytes based on response type
             if hasattr(response, '__iter__') and not isinstance(response, bytes):
-                # Return generator that yields chunks
                 def stream_generator():
                     for chunk in response:
                         if chunk:
@@ -117,11 +88,9 @@ class DifyElevenlabsProviderText2SpeechModel(TTSModel):
                 
                 return stream_generator()
             else:
-                # For non-iterable responses, return as bytes
                 return response
             
         except Exception as ex:
-            # Map the exception to the appropriate error type
             error_message = f"Text-to-speech generation failed: {str(ex)}"
             
             if isinstance(ex, json.JSONDecodeError):
@@ -153,11 +122,9 @@ class DifyElevenlabsProviderText2SpeechModel(TTSModel):
             if not api_key:
                 raise CredentialsValidateFailedError("API key is required")
             
-            # Initialize ElevenLabs client
             client = ElevenLabs(api_key=api_key)
             
-            # Test by fetching voices
-            client.voices.get_all()
+            client.voices.get_default_settings()
             
         except Exception as ex:
             raise CredentialsValidateFailedError(str(ex))

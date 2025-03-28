@@ -22,9 +22,8 @@ class DifyElevenlabsProviderModelProvider(ModelProvider):
             if not api_key:
                 raise CredentialsValidateFailedError("API key is required")
                 
-            # Initialize ElevenLabs client and test by fetching voices
             client = ElevenLabs(api_key=api_key)
-            client.voices.get_all()  # This will fail if API key is invalid
+            client.voices.get_default_settings()
             
         except CredentialsValidateFailedError as ex:
             raise ex

@@ -1,12 +1,12 @@
 version: 0.0.2
 type: plugin
 author: cdpath
-name: dify-elevenlabs-provider
+name: dify-elevenlabs-provider-debug
 label:
-  en_US: ElevenLabs
-  ja_JP: ElevenLabs
-  zh_Hans: ElevenLabs
-  pt_BR: ElevenLabs
+  en_US: ElevenLabs Debug
+  ja_JP: ElevenLabs Debug
+  zh_Hans: ElevenLabs Debug
+  pt_BR: ElevenLabs Debug
 description:
   en_US: ElevenLabs TTS/STT provider
   ja_JP: ElevenLabs TTS/STT provider

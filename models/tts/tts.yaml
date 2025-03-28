@@ -1,34 +1,70 @@
 model: eleven_multilingual_v2
 model_type: tts
 model_properties:
-  default_voice: 'Rachel'
+  default_voice: 'Sarah'
   voices:
-    - mode: 'Rachel'
-      name: 'Rachel'
+    - mode: '9BWtsMINqrJLrRacOk9x'
+      name: 'Aria'
       language: ['en-US']
-    - mode: 'Domi'
-      name: 'Domi'
+    - mode: 'CwhRBWXzGAHq8TQ4Fs17'
+      name: 'Roger'
       language: ['en-US']
-    - mode: 'Bella'
-      name: 'Bella'
+    - mode: 'EXAVITQu4vr4xnSDxMaL'
+      name: 'Sarah'
       language: ['en-US']
-    - mode: 'Antoni'
-      name: 'Antoni'
+    - mode: 'FGY2WhTYpPnrIDTdsKH5'
+      name: 'Laura'
       language: ['en-US']
-    - mode: 'Thomas'
-      name: 'Thomas'
+    - mode: 'IKne3meq5aSn9XLyUdCD'
+      name: 'Charlie'
       language: ['en-US']
-    - mode: 'Josh'
-      name: 'Josh'
+    - mode: 'JBFqnCBsd6RMkjVDRZzb'
+      name: 'George'
       language: ['en-US']
-    - mode: 'Arnold'
-      name: 'Arnold'
+    - mode: 'N2lVS1w4EtoT3dr4eOWO'
+      name: 'Callum'
       language: ['en-US']
-    - mode: 'Adam'
-      name: 'Adam'
+    - mode: 'SAz9YHcvj6GT2YYXdXww'
+      name: 'River'
       language: ['en-US']
-    - mode: 'Sam'
-      name: 'Sam'
+    - mode: 'TX3LPaxmHKxFdv7VOQHJ'
+      name: 'Liam'
+      language: ['en-US']
+    - mode: 'XB0fDUnXU5powFXDhCwa'
+      name: 'Charlotte'
+      language: ['en-US']
+    - mode: 'Xb7hH8MSUJpSbSDYk0k2'
+      name: 'Alice'
+      language: ['en-US']
+    - mode: 'XrExE9yKIg1WjnnlVkGX'
+      name: 'Matilda'
+      language: ['en-US']
+    - mode: 'bIHbv24MWmeRgasZH58o'
+      name: 'Will'
+      language: ['en-US']
+    - mode: 'cgSgspJ2msm6clMCkdW9'
+      name: 'Jessica'
+      language: ['en-US']
+    - mode: 'cjVigY5qzO86Huf0OWal'
+      name: 'Eric'
+      language: ['en-US']
+    - mode: 'iP95p4xoKVk53GoZ742B'
+      name: 'Chris'
+      language: ['en-US']
+    - mode: 'nPczCjzI2devNBz1zQrb'
+      name: 'Brian'
+      language: ['en-US']
+    - mode: 'onwK4e9ZLuTAKqWW03F9'
+      name: 'Daniel'
+      language: ['en-US']
+    - mode: 'pFZP5JQG7iQjIQuC4Bku'
+      name: 'Lily'
+      language: ['en-US']
+    - mode: 'pqHfZKP75CvOlQylNhV4'
+      name: 'Bill'
+      language: ['en-US']
+    - mode: '7V2labMjY8jnJlxDRW75'
+      name: 'Koby'
       language: ['en-US']
   word_limit: 5000
   audio_type: 'mp3'
