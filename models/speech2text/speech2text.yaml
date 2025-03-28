@@ -1,4 +1,4 @@
-model: speech-to-text
+model: scribe_v1
 model_type: speech2text
 model_properties:
   context_size: 25600

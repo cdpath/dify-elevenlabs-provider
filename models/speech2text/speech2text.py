@@ -50,7 +50,6 @@ class DifyElevenlabsProviderSpeech2TextModel(Speech2TextModel):
         :param user: unique user id
         :return: transcribed text
         """
-        # Get API key from credentials
         if not isinstance(credentials, dict):
             raise CredentialsValidateFailedError("Credentials must be a dictionary")
             
@@ -59,31 +58,24 @@ class DifyElevenlabsProviderSpeech2TextModel(Speech2TextModel):
             raise CredentialsValidateFailedError("API key is required")
             
         try:
-            # Initialize ElevenLabs client
             client = ElevenLabs(api_key=api_key)
             
-            # Use the audio_file directly if it's already a file-like object
-            # or convert bytes to BytesIO if needed
             if hasattr(audio_file, 'read'):
                 audio_data = audio_file
             else:
                 audio_data = BytesIO(audio_file)
             
-            model_id = "scribe_v1"
-            
             transcription = client.speech_to_text.convert(
                 file=audio_data,
-                model_id="scribe_v1",
+                model_id=model,
                 tag_audio_events=True,
                 language_code="eng",
                 diarize=True,
             )
             
-            # Return the transcribed text
             return transcription.text
                 
         except Exception as ex:
-            # Map the exception to the appropriate error type
             error_message = f"Speech-to-text transcription failed: {str(ex)}"
             
             if isinstance(ex, json.JSONDecodeError):
@@ -114,10 +106,8 @@ class DifyElevenlabsProviderSpeech2TextModel(Speech2TextModel):
             if not api_key:
                 raise CredentialsValidateFailedError("API key is required")
             
-            # Initialize ElevenLabs client
             client = ElevenLabs(api_key=api_key)
             
-            # Check if API key is valid by getting available models
             models = client.speech_to_text.get_models()
             if not models:
                 raise Exception("Failed to validate API key: Could not retrieve models")
