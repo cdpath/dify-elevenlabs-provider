@@ -1,6 +1,7 @@
-from typing import Optional, Dict, Type
+from typing import Optional, Dict, Type, Any
 from io import BytesIO
 import logging
+import json
 
 from dify_plugin import Speech2TextModel
 from dify_plugin.errors.model import (
@@ -13,26 +14,49 @@ from dify_plugin.errors.model import (
     InvokeServerUnavailableError
 )
 from elevenlabs.client import ElevenLabs
-import json
-import requests
+import requests.exceptions
 
+logger = logging.getLogger(__name__)
 
 class DifyElevenlabsProviderSpeech2TextModel(Speech2TextModel):
-    """
-    Model class for ElevenLabs Speech to Text model.
-    """
-    
+    """Model class for ElevenLabs Speech to Text model."""
+
+    DEFAULT_TRANSCRIPTION_SETTINGS = {
+        "tag_audio_events": True,
+        "language_code": "eng",
+        "diarize": True,
+    }
+
     @property
-    def _invoke_error_mapping(self) -> Dict[Type[InvokeError], list]:
-        """
-        Map ElevenLabs API exceptions to Dify plugin error types
-        """
+    def _invoke_error_mapping(self) -> Dict[Type[InvokeError], list[Type[Exception]]]:
+        """Map ElevenLabs API exceptions to Dify plugin error types."""
         return {
             InvokeBadRequestError: [ValueError, requests.exceptions.HTTPError, json.JSONDecodeError],
             InvokeConnectionError: [requests.exceptions.ConnectionError, requests.exceptions.RequestException],
             InvokeServerUnavailableError: [requests.exceptions.Timeout],
             InvokeAuthorizationError: [PermissionError],
         }
+
+    def _validate_credentials(self, credentials: Any) -> str:
+        """Validate and extract API key from credentials.
+
+        Args:
+            credentials: The credentials dictionary containing the API key.
+
+        Returns:
+            str: The validated API key.
+
+        Raises:
+            CredentialsValidateFailedError: If credentials are invalid.
+        """
+        if not isinstance(credentials, dict):
+            raise CredentialsValidateFailedError("Credentials must be a dictionary")
+
+        api_key = credentials.get('api_key')
+        if not api_key:
+            raise CredentialsValidateFailedError("API key is required")
+
+        return api_key
 
     def _invoke(
         self,
@@ -41,76 +65,67 @@ class DifyElevenlabsProviderSpeech2TextModel(Speech2TextModel):
         audio_file: bytes,
         user: Optional[str] = None,
     ) -> str:
-        """
-        Speech to text invoke
+        """Speech to text invoke.
 
-        :param model: model name
-        :param credentials: model credentials
-        :param audio_file: audio file bytes
-        :param user: unique user id
-        :return: transcribed text
+        Args:
+            model: Model name
+            credentials: Model credentials
+            audio_file: Audio file bytes
+            user: Unique user id
+
+        Returns:
+            str: Transcribed text
+
+        Raises:
+            Various InvokeError types based on the error encountered
         """
-        if not isinstance(credentials, dict):
-            raise CredentialsValidateFailedError("Credentials must be a dictionary")
-            
-        api_key = credentials.get('api_key')
-        if not api_key:
-            raise CredentialsValidateFailedError("API key is required")
+        api_key = self._validate_credentials(credentials)
             
         try:
             client = ElevenLabs(api_key=api_key)
             
-            if hasattr(audio_file, 'read'):
-                audio_data = audio_file
-            else:
-                audio_data = BytesIO(audio_file)
+            audio_data = BytesIO(audio_file) if not hasattr(audio_file, 'read') else audio_file
             
             transcription = client.speech_to_text.convert(
                 file=audio_data,
                 model_id=model,
-                tag_audio_events=True,
-                language_code="eng",
-                diarize=True,
+                **self.DEFAULT_TRANSCRIPTION_SETTINGS
             )
             
             return transcription.text
                 
         except Exception as ex:
             error_message = f"Speech-to-text transcription failed: {str(ex)}"
+            logger.error(error_message, exc_info=True)
             
             if isinstance(ex, json.JSONDecodeError):
-                logging.error(f"JSON decode error: {str(ex)}")
                 raise InvokeBadRequestError(f"Failed to process response: {str(ex)}")
-            elif "401" in str(ex) or "403" in str(ex):
+            elif any(code in str(ex) for code in ('401', '403')):
                 raise InvokeAuthorizationError(error_message)
-            elif "429" in str(ex):
+            elif '429' in str(ex):
                 raise InvokeRateLimitError(error_message)
-            elif "5" in str(ex) and len(str(ex)) > 0 and str(ex)[0] == "5":
+            elif str(ex).startswith('5'):
                 raise InvokeServerUnavailableError(error_message)
             else:
-                logging.error(f"Unexpected error in STT invoke: {str(ex)}", exc_info=True)
                 raise InvokeBadRequestError(error_message)
 
     def validate_credentials(
         self, model: str, credentials: dict, user: Optional[str] = None
     ) -> None:
-        """
-        Validate speech to text credentials
+        """Validate speech to text credentials.
 
-        :param model: model name
-        :param credentials: model credentials
-        :param user: unique user id
+        Args:
+            model: Model name
+            credentials: Model credentials
+            user: Unique user id
+
+        Raises:
+            CredentialsValidateFailedError: If credentials validation fails
         """
         try:
-            api_key = credentials.get('api_key')
-            if not api_key:
-                raise CredentialsValidateFailedError("API key is required")
-            
+            api_key = self._validate_credentials(credentials)
             client = ElevenLabs(api_key=api_key)
-            
-            models = client.speech_to_text.get_models()
-            if not models:
-                raise Exception("Failed to validate API key: Could not retrieve models")
-                
+            client.generate("Hello Dify")
         except Exception as ex:
+            logger.error(f"Credentials validation failed: {str(ex)}", exc_info=True)
             raise CredentialsValidateFailedError(str(ex))
