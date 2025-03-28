@@ -23,8 +23,8 @@ A Dify plugin for integrating ElevenLabs Text-to-Speech and Speech-to-Text servi
 ### Text-to-Speech
 
 - **Model**: `eleven_multilingual_v2`
-- **Voices**: Rachel, Domi, Bella, Antoni, Thomas, Josh, Arnold, Adam, Sam
-- **Default Voice**: Rachel
+- **Voices**: Aria, Roger, Sarah, Laura, Charlie, George, Callum, River, Liam, Charlotte, Alice, Matilda, Will, Jessica, Eric, Chris, Brian, Daniel, Lily, Bill, Koby
+- **Default Voice**: Sarah
 
 ### Speech-to-Text
 
